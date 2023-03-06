@@ -68,6 +68,40 @@ def insertion_sort(l):
     return l
 
 
+def merge_sort(l):
+    left = 0
+    right = len(l)
+    if right == 1:
+        return l
+    mid = (right - left >> 1) + left
+    list_l = merge_sort(l[:mid])
+    list_r = merge_sort(l[mid:])
+    return merge(list_l, list_r)
+
+
+def merge(ll, rr):
+    p1 = 0
+    p2 = 0
+    length_l = len(ll)
+    length_r = len(rr)
+    final = []
+    while True:
+        if p1 > length_l - 1:
+            final.extend(rr[p2:])
+            break
+        if p2 > length_r - 1:
+            final.extend(ll[p1:])
+            break
+
+        if ll[p1] >= rr[p2]:
+            final.append(rr[p2])
+            p2 += 1
+        else:
+            final.append(ll[p1])
+            p1 += 1
+    return final
+
+'''
 l = [9, 4, 2, 1, 3, 4, 5]
 
 l1 = selection_sort(l)
@@ -76,4 +110,9 @@ l1 = bubble_sort(l)
 
 l3 = insertion_sort(l)
 
+l4 = merge_sort(l)
+
 comparator(10000)
+'''
+l = [9, 4, 2, 1, 3, 4, 5]
+print(merge_sort(l))
