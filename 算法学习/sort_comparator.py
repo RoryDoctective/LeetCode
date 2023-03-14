@@ -138,16 +138,30 @@ def partition(l, target):
     return l, p1, p3
 
 
-def heap_sort(l):
+def heap_sort(l):  # O(N log N)
     # add one by one
-    for i in range(len(l)):
-        l = heap_insert(l, i)
+    for i in range(len(l)):  # O(N)
+        l = heap_insert(l, i)  # O(log N)
 
     # take away one by one
-    for i in reversed(range(len(l))):
+    for i in reversed(range(len(l))):  # O(N)
         # for each run, the l[i] is in correct place
         l[0], l[i] = l[i], l[0]
-        l = heapify(l, 0, i-1)
+        l = heapify(l, 0, i-1)  # O(log N)
+
+    return l
+
+
+def heap_sort_2(l):  # O(N log N)
+    # add the whole list
+    for i in reversed(range(len(l))):
+        l = heapify(l, i, len(l))
+
+    # take away one by one
+    for i in reversed(range(len(l))):  # O(N)
+        # for each run, the l[i] is in correct place
+        l[0], l[i] = l[i], l[0]
+        l = heapify(l, 0, i-1) # O(log N)
 
     return l
 
@@ -222,3 +236,4 @@ comparator(10000)
 l = [9, 4, 2, 1, 3, 4, 5]
 print(quick_sort(l))
 print(heap_sort(l))
+print(heap_sort_2(l))
