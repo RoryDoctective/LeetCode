@@ -1,7 +1,62 @@
 # 链表
 # 两个链表相加
+# 方法：
+#   1. 直接写
+#   2. 递归
+#   3. 双指针
+# 学到了：
+#   1. dummy = ListNode(), p=dummy, return dummy.next 得方法保留头
+#   2. carry = sum//10; val = sum %10
 
-# 自己写的垃圾
+# 别人写的双指针（比我的简单多了）
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        p = dummy
+        p1 = l1
+        p2 = l2
+        carry = 0
+        while p1 or p2:
+            first, second = 0, 0
+            if p1:
+                first = p1.val
+                p1 = p1.next
+            if p2:
+                second = p2.val
+                p2 = p2.next
+            sums = first + second + carry
+            carry = sums // 10
+            val = sums % 10
+            p.next = ListNode(val, None)
+            p = p.next
+
+        if carry:
+            p.next = ListNode(carry, None)
+        return dummy.next
+
+
+# 别人的递归： 建议再写一遍自己想不到
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        # 递归
+        if not l1:
+            return l2
+        if not l2:
+            return l1
+
+        l1.val = l1.val + l2.val
+        if l1.val > 9:
+            # // 整除
+            l1.next = self.addTwoNumbers(ListNode(l1.val // 10), l1.next)
+            # % 取余
+            l1.val = l1.val % 10
+
+        l1.next = self.addTwoNumbers(l1.next, l2.next)
+
+        return l1
+
+
+# 自己写的垃圾： 直接写
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
