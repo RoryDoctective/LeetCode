@@ -51,4 +51,24 @@ nums = [2, 3, 5, 1, 54, 23, 132]
 print(heapq.nlargest(3,nums))
 print(heapq.nsmallest(3,nums))
 
+'''
+python中的堆排序模块heapq本身不支持自定义比较函数，
+(cmp_to_key 大法没有办法使用)
+可以通过重写对象的__lt__方法的方式来实现自定义比较函数。
+'''
+# if could write directly
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+    def __lt__(self, other):
+        return self.val < other.val
 
+# if cannot write directly
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+def __lt__(self, other):
+    return self.val < other.val
+ListNode.__lt__=__lt__
